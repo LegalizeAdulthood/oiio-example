@@ -1,0 +1,4 @@
+[submodule "vcpkg"]
+	shallow = true
+	path = vcpkg
+	url = https://github.com/microsoft/vcpkg
