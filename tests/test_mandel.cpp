@@ -31,6 +31,15 @@ TEST(TestMandel, iterateToMax)
     EXPECT_EQ(256, result.iterationCount);
 }
 
+TEST(TestMandel, exrSupportsChannelFormats)
+{
+    std::unique_ptr<OIIO::ImageOutput> image{OIIO::ImageOutput::create("tmp.exr")};
+
+    const bool result{image->supports("channelformats") != 0};
+
+    EXPECT_TRUE(result);
+}
+
 TEST(TestMandel, openExrFromSpec)
 {
     std::unique_ptr<OIIO::ImageOutput> image{OIIO::ImageOutput::create("tmp.exr")};
@@ -38,6 +47,15 @@ TEST(TestMandel, openExrFromSpec)
     const bool result{image->open("tmp.exr", mandel::get_iter_spec(640, 480))};
 
     EXPECT_TRUE(result);
+}
+
+TEST(TestMandel, tiffDoesNotSupportChannelFormats)
+{
+    std::unique_ptr<OIIO::ImageOutput> image{OIIO::ImageOutput::create("tmp.tif")};
+
+    const bool result{image->supports("channelformats") != 0};
+
+    EXPECT_FALSE(result);
 }
 
 TEST(TestMandel, openTiffFromSpec)
