@@ -31,7 +31,39 @@ jobs:
       if: matrix.os == 'ubuntu-latest'
       uses: awalsh128/cache-apt-pkgs-action@latest
       with:
-        packages: autoconf automake autoconf-archive '^libxcb.*-dev' libx11-xcb-dev libglu1-mesa-dev libxrender-dev libxi-dev libxkbcommon-dev libxkbcommon-x11-dev libegl1-mesa-dev
+        packages: >
+          autoconf
+          automake
+          autoconf-archive
+          build-essential
+          libegl1-mesa-dev
+          libgl1-mesa-dev
+          libglu1-mesa-dev
+          libgstreamer-gl1.0-0
+          libpulse-dev
+          libx11-xcb-dev
+          libxcb-glx0
+          libxcb-icccm4
+          libxcb-image0
+          libxcb-keysyms1
+          libxcb-randr0
+          libxcb-render-util0
+          libxcb-render0
+          libxcb-shape0
+          libxcb-shm0
+          libxcb-sync1
+          libxcb-util1
+          libxcb-xfixes0
+          libxcb-xinerama0
+          libxcb-xkb-dev
+          libxcb1
+          libxi-dev
+          libxkbcommon-dev
+          libxkbcommon-x11-0
+          libxkbcommon-x11-dev
+          libxrender-dev
+          libtool
+          pkg-config
 
     - name: Run Workflow
       run: cmake --workflow --preset default
