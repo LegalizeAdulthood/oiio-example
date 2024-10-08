@@ -20,6 +20,7 @@ TEST(TestMandel, getImageSpec)
     ASSERT_EQ(2U, result.channelnames.size());
     EXPECT_EQ("lastZ", result.channelnames[0]);
     EXPECT_EQ("iterationCount", result.channelnames[1]);
+    EXPECT_EQ("scene_linear", result.get_string_attribute("oiio:ColorSpace"));
 }
 
 TEST(TestMandel, iterateToMax)

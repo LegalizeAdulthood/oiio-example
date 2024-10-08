@@ -12,6 +12,7 @@ OIIO::ImageSpec get_iter_spec(int width, int height)
     spec.channelformats.assign(
         {OIIO::TypeDesc(OIIO::TypeDesc::DOUBLE, OIIO::TypeDesc::VEC2), OIIO::TypeDesc(OIIO::TypeDesc::UINT32)});
     spec.channelnames.assign({"lastZ", "iterationCount"});
+    spec.attribute("oiio:ColorSpace", "scene_linear");
     return spec;
 }
 
