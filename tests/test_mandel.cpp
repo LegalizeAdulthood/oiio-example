@@ -41,6 +41,16 @@ TEST(TestMandel, exrSupportsChannelFormats)
     EXPECT_TRUE(result);
 }
 
+TEST(TestMandel, exrSupportsArbitraryMetadata)
+{
+    std::unique_ptr<OIIO::ImageOutput> image{OIIO::ImageOutput::create("tmp.exr")};
+    ASSERT_TRUE(image);
+
+    const bool result{image->supports("arbitrary_metadata") != 0};
+
+    EXPECT_TRUE(result);
+}
+
 TEST(TestMandel, openExrFromSpec)
 {
     std::unique_ptr<OIIO::ImageOutput> image{OIIO::ImageOutput::create("tmp.exr")};
