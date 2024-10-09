@@ -1,7 +1,5 @@
 find_package(OpenImageIO CONFIG REQUIRED)
 
-target_compile_options(OpenImageIO::OpenImageIO INTERFACE $<$<CXX_COMPILER_ID:MSVC>:/utf-8>)
-
 add_library(mandel
     include/mandel/mandel.h
     mandel.cpp)
