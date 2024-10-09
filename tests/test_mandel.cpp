@@ -16,13 +16,15 @@ TEST(TestMandel, getImageSpec)
 
     EXPECT_EQ(width, result.width);
     EXPECT_EQ(height, result.height);
-    EXPECT_EQ(2, result.nchannels);
-    ASSERT_EQ(2U, result.channelformats.size());
-    EXPECT_EQ(OIIO::TypeDesc(OIIO::TypeDesc::DOUBLE, OIIO::TypeDesc::VEC2), result.channelformats[0]);
-    EXPECT_EQ(OIIO::TypeDesc(OIIO::TypeDesc::UINT32), result.channelformats[1]);
-    ASSERT_EQ(2U, result.channelnames.size());
-    EXPECT_EQ("lastZ", result.channelnames[0]);
-    EXPECT_EQ("iterationCount", result.channelnames[1]);
+    EXPECT_EQ(3, result.nchannels);
+    ASSERT_EQ(3U, result.channelformats.size());
+    EXPECT_EQ(OIIO::TypeDesc::FLOAT, result.channelformats[0]);
+    EXPECT_EQ(OIIO::TypeDesc::FLOAT, result.channelformats[1]);
+    EXPECT_EQ(OIIO::TypeDesc::UINT32, result.channelformats[2]);
+    ASSERT_EQ(3U, result.channelnames.size());
+    EXPECT_EQ("0.lastZReal", result.channelnames[0]);
+    EXPECT_EQ("1.lastZImag", result.channelnames[1]);
+    EXPECT_EQ("2.iterationCount", result.channelnames[2]);
     EXPECT_EQ("scene_linear", result.get_string_attribute("oiio:ColorSpace"));
 }
 

@@ -10,7 +10,7 @@
 namespace mandel
 {
 
-using Complex = std::complex<double>;
+using Complex = std::complex<float>;
 using Count = std::uint32_t;
 
 struct OrbitResult

@@ -8,11 +8,11 @@ namespace iterate
 mandel::Complex parse(std::string_view text)
 {
     std::istringstream str(text.data());
-    double re;
+    float re;
     str >> re;
     char c;
     str >> c;
-    double im;
+    float im;
     str >> im;
     return {re, im};
 }
@@ -27,7 +27,7 @@ int main(const std::vector<std::string_view> &args, std::ostream &err, mandel::R
     }
 
     const mandel::OrbitRegion region{parse(args[1]), parse(args[2])};
-    const std::vector<mandel::OrbitResult> result{iter(region, 256, 640, 480)};
+    const std::vector result{iter(region, 256, 640, 480)};
     return writer(result, args[3]);
 }
 

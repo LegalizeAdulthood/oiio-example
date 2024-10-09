@@ -8,15 +8,15 @@ OIIO::ImageSpec get_iter_spec(int width, int height)
     OIIO::ImageSpec spec;
     spec.width = width;
     spec.height = height;
-    spec.nchannels = 2;
+    spec.nchannels = 3;
     spec.channelformats.assign(
-        {OIIO::TypeDesc(OIIO::TypeDesc::DOUBLE, OIIO::TypeDesc::VEC2), OIIO::TypeDesc(OIIO::TypeDesc::UINT32)});
-    spec.channelnames.assign({"lastZ", "iterationCount"});
+        {OIIO::TypeDesc::FLOAT, OIIO::TypeDesc::FLOAT, OIIO::TypeDesc::UINT32});
+    spec.channelnames.assign({"0.lastZReal", "1.lastZImag", "2.iterationCount"});
     spec.attribute("oiio:ColorSpace", "scene_linear");
     return spec;
 }
 
-OrbitResult mandelbrot(const std::complex<double> &c, std::uint32_t maxIter)
+OrbitResult mandelbrot(const Complex &c, std::uint32_t maxIter)
 {
     OrbitResult result;
     result.lastZ = c;
@@ -37,14 +37,14 @@ std::vector<OrbitResult> render(const OrbitRegion &region, Count maxIter, int wi
 
     auto it{result.begin()};
     const Complex delta{region.upperRight - region.lowerLeft};
-    const double delta_x{delta.real() / width};
-    const double delta_y{delta.imag() / height};
+    const float delta_x{delta.real() / width};
+    const float delta_y{delta.imag() / height};
     for (int y = 0; y < height; ++y)
     {
-        const double imag{region.lowerLeft.imag() + delta_y * y};
+        const float imag{region.lowerLeft.imag() + delta_y * y};
         for (int x = 0; x < width; ++x)
         {
-            const double real{region.lowerLeft.real() + delta_x * x};
+            const float real{region.lowerLeft.real() + delta_x * x};
             *it = mandelbrot(Complex{real, imag}, maxIter);
             ++it;
         }
