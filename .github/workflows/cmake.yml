@@ -10,9 +10,8 @@ jobs:
   build:
     strategy:
       matrix:
-        # Can't seem to get the right secret sauce to build Qt on ubuntu-latest under github actions
-        # os: [ ubuntu-latest, windows-latest ]
-        os: [ windows-latest ]
+        # On ubuntu, we skip the viewer feature which drags in Qt that doesn't build in github CI
+        os: [ ubuntu-latest, windows-latest ]
     runs-on: ${{matrix.os}}
     env:
       VCPKG_BINARY_SOURCES: "clear;x-gha,readwrite"
@@ -28,49 +27,6 @@ jobs:
         script: |
           core.exportVariable('ACTIONS_CACHE_URL', process.env.ACTIONS_CACHE_URL || '');
           core.exportVariable('ACTIONS_RUNTIME_TOKEN', process.env.ACTIONS_RUNTIME_TOKEN || '');
-
-    #- name: Install Qt
-    #  if: matrix.os == 'ubuntu-latest'
-    #  uses: jurplel/install-qt-action@v4
-    #
-    #- name: Install Prerequisites
-    #  if: matrix.os == 'ubuntu-latest'
-    #  uses: awalsh128/cache-apt-pkgs-action@latest
-    #  with:
-    #    packages: >
-    #      autoconf
-    #      automake
-    #      autoconf-archive
-    #      build-essential
-    #      libegl1-mesa-dev
-    #      libgl1-mesa-dev
-    #      libglu1-mesa-dev
-    #      libgstreamer-gl1.0-0
-    #      libpulse-dev
-    #      libx11-xcb-dev
-    #      libxcb-cursor0
-    #      libxcb-glx0
-    #      libxcb-icccm4
-    #      libxcb-image0
-    #      libxcb-keysyms1
-    #      libxcb-randr0
-    #      libxcb-render-util0
-    #      libxcb-render0
-    #      libxcb-shape0
-    #      libxcb-shm0
-    #      libxcb-sync1
-    #      libxcb-util1
-    #      libxcb-xfixes0
-    #      libxcb-xinerama0
-    #      libxcb-xkb-dev
-    #      libxcb1
-    #      libxi-dev
-    #      libxkbcommon-dev
-    #      libxkbcommon-x11-0
-    #      libxkbcommon-x11-dev
-    #      libxrender-dev
-    #      libtool
-    #      pkg-config
 
     - name: Run Workflow
       run: cmake --workflow --preset default
