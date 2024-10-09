@@ -1,5 +1,7 @@
 #pragma once
 
+#include <OpenImageIO/imageio.h>
+
 #include <complex>
 #include <cstdint>
 #include <functional>
@@ -17,6 +19,16 @@ struct OrbitResult
     Count count;
 };
 
+inline bool operator==(const OrbitResult &lhs, const OrbitResult &rhs)
+{
+    return lhs.lastZ == rhs.lastZ //
+        && lhs.count == rhs.count;
+}
+inline bool operator!=(const OrbitResult &lhs, const OrbitResult &rhs)
+{
+    return !(lhs == rhs);
+}
+
 struct OrbitRegion
 {
     Complex lowerLeft;
@@ -33,6 +45,8 @@ inline bool operator!=(const OrbitRegion &lhs, const OrbitRegion &rhs)
     return !(lhs == rhs);
 }
 
-using Renderer = std::function<std::vector<OrbitResult>(const OrbitRegion &region, Count maxIter, int width, int height)>;
+using IteratedRegion = std::vector<OrbitResult>;
+
+using Renderer = std::function<IteratedRegion(const OrbitRegion &region, Count maxIter, int width, int height)>;
 
 } // namespace mandel
