@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.23)
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(OIIO_EXAMPLE_PROJECT_NAME "OpenImageIO Example" CACHE "STRING" "Default project name for IDEs")

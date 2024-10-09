@@ -28,7 +28,7 @@ TEST(TestMandel, getImageSpec)
 
 TEST(TestMandel, iterateToMax)
 {
-    mandel::OrbitResult result{mandel::iterate(mandel::Complex{-1.5, 0}, 256)};
+    mandel::OrbitResult result{mandel::mandelbrot(mandel::Complex{-1.5, 0}, 256)};
 
     EXPECT_NE(mandel::Complex(), result.lastZ);
     EXPECT_EQ(256, result.count);
@@ -91,7 +91,7 @@ TEST(TestMandel, iterateRegion)
     const int width{8};
     const int height{8};
 
-    std::vector<mandel::OrbitResult> result{iterate(region, maxIter, width, height)};
+    std::vector<mandel::OrbitResult> result{render(region, maxIter, width, height)};
 
     EXPECT_EQ(static_cast<std::size_t>(width*height), result.size());
     for (int y = 0; y < height; ++y)

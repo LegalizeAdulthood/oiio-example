@@ -16,7 +16,7 @@ OIIO::ImageSpec get_iter_spec(int width, int height)
     return spec;
 }
 
-OrbitResult iterate(const std::complex<double> &c, std::uint32_t maxIter)
+OrbitResult mandelbrot(const std::complex<double> &c, std::uint32_t maxIter)
 {
     OrbitResult result;
     result.lastZ = c;
@@ -30,7 +30,7 @@ OrbitResult iterate(const std::complex<double> &c, std::uint32_t maxIter)
     return result;
 }
 
-std::vector<OrbitResult> iterate(const OrbitRegion &region, Count maxIter, int width, int height)
+std::vector<OrbitResult> render(const OrbitRegion &region, Count maxIter, int width, int height)
 {
     std::vector<OrbitResult> result;
     result.resize(width*height);
@@ -45,7 +45,7 @@ std::vector<OrbitResult> iterate(const OrbitRegion &region, Count maxIter, int w
         for (int x = 0; x < width; ++x)
         {
             const double real{region.lowerLeft.real() + delta_x * x};
-            *it = iterate(Complex{real, imag}, maxIter);
+            *it = mandelbrot(Complex{real, imag}, maxIter);
             ++it;
         }
     }
