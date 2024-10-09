@@ -30,4 +30,27 @@ OrbitResult iterate(const std::complex<double> &c, std::uint32_t maxIter)
     return result;
 }
 
+std::vector<OrbitResult> iterate(const OrbitRegion &region, Count maxIter, int width, int height)
+{
+    std::vector<OrbitResult> result;
+    result.resize(width*height);
+
+    auto it{result.begin()};
+    const Complex delta{region.upperRight - region.lowerLeft};
+    const double delta_x{delta.real() / width};
+    const double delta_y{delta.imag() / height};
+    for (int y = 0; y < height; ++y)
+    {
+        const double imag{region.lowerLeft.imag() + delta_y * y};
+        for (int x = 0; x < width; ++x)
+        {
+            const double real{region.lowerLeft.real() + delta_x * x};
+            *it = iterate(Complex{real, imag}, maxIter);
+            ++it;
+        }
+    }
+
+    return result;
+}
+
 } // namespace mandel

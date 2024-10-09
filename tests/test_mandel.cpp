@@ -83,3 +83,23 @@ TEST(TestMandel, openTiffFromSpecFails)
 
     EXPECT_FALSE(result);
 }
+
+TEST(TestMandel, iterateRegion)
+{
+    const mandel::OrbitRegion region{mandel::Complex{-1.5, -1.5}, mandel::Complex{1.5, 1.5}};
+    const mandel::Count maxIter{256};
+    const int width{8};
+    const int height{8};
+
+    std::vector<mandel::OrbitResult> result{iterate(region, maxIter, width, height)};
+
+    EXPECT_EQ(static_cast<std::size_t>(width*height), result.size());
+    for (int y = 0; y < height; ++y)
+    {
+        for (int x = 0; x < width; ++x)
+        {
+            ASSERT_NE(0, result[y * width + x].count)
+                << "[" << x << "," << y << " of " << width << "," << height << "] count is zero";
+        }
+    }
+}
