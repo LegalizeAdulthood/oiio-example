@@ -8,14 +8,17 @@
 namespace mandel
 {
 
+using Complex = std::complex<double>;
+using Count = std::uint32_t;
+
 struct OrbitResult
 {
-    std::complex<double> lastZ;
-    std::uint32_t iterationCount;
+    Complex lastZ;
+    Count count;
 };
 
 OIIO::ImageSpec get_iter_spec(int width, int height);
 
-OrbitResult iterate(const std::complex<double> &loc, std::uint32_t maxIter);
+OrbitResult iterate(const Complex &c, Count maxIter);
 
 } // namespace mandel

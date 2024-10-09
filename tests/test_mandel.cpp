@@ -4,6 +4,9 @@
 
 using namespace testing;
 
+constexpr const char *const ARBITRARY_TIFF_FILE{"tmp.tif"};
+constexpr const char *const ARBITRARY_EXR_FILE{"tmp.exr"};
+
 TEST(TestMandel, getImageSpec)
 {
     constexpr int width{640};
@@ -25,15 +28,15 @@ TEST(TestMandel, getImageSpec)
 
 TEST(TestMandel, iterateToMax)
 {
-    mandel::OrbitResult result{mandel::iterate(std::complex<double>{-1.5, 0}, 256)};
+    mandel::OrbitResult result{mandel::iterate(mandel::Complex{-1.5, 0}, 256)};
 
-    EXPECT_NE(std::complex<double>(), result.lastZ);
-    EXPECT_EQ(256, result.iterationCount);
+    EXPECT_NE(mandel::Complex(), result.lastZ);
+    EXPECT_EQ(256, result.count);
 }
 
 TEST(TestMandel, exrSupportsChannelFormats)
 {
-    std::unique_ptr<OIIO::ImageOutput> image{OIIO::ImageOutput::create("tmp.exr")};
+    std::unique_ptr<OIIO::ImageOutput> image{OIIO::ImageOutput::create(ARBITRARY_EXR_FILE)};
     ASSERT_TRUE(image);
 
     const bool result{image->supports("channelformats") != 0};
@@ -43,7 +46,7 @@ TEST(TestMandel, exrSupportsChannelFormats)
 
 TEST(TestMandel, exrSupportsArbitraryMetadata)
 {
-    std::unique_ptr<OIIO::ImageOutput> image{OIIO::ImageOutput::create("tmp.exr")};
+    std::unique_ptr<OIIO::ImageOutput> image{OIIO::ImageOutput::create(ARBITRARY_EXR_FILE)};
     ASSERT_TRUE(image);
 
     const bool result{image->supports("arbitrary_metadata") != 0};
@@ -53,17 +56,17 @@ TEST(TestMandel, exrSupportsArbitraryMetadata)
 
 TEST(TestMandel, openExrFromSpec)
 {
-    std::unique_ptr<OIIO::ImageOutput> image{OIIO::ImageOutput::create("tmp.exr")};
+    std::unique_ptr<OIIO::ImageOutput> image{OIIO::ImageOutput::create(ARBITRARY_EXR_FILE)};
     ASSERT_TRUE(image);
 
-    const bool result{image->open("tmp.exr", mandel::get_iter_spec(640, 480))};
+    const bool result{image->open(ARBITRARY_EXR_FILE, mandel::get_iter_spec(640, 480))};
 
     EXPECT_TRUE(result);
 }
 
-TEST(TestMandel, tiffDoesNotSupportChannelFormats)
+TEST(TestMandel, tiffSupportsChannelFormatsFails)
 {
-    std::unique_ptr<OIIO::ImageOutput> image{OIIO::ImageOutput::create("tmp.tif")};
+    std::unique_ptr<OIIO::ImageOutput> image{OIIO::ImageOutput::create(ARBITRARY_TIFF_FILE)};
     ASSERT_TRUE(image);
 
     const bool result{image->supports("channelformats") != 0};
@@ -71,12 +74,12 @@ TEST(TestMandel, tiffDoesNotSupportChannelFormats)
     EXPECT_FALSE(result);
 }
 
-TEST(TestMandel, openTiffFromSpec)
+TEST(TestMandel, openTiffFromSpecFails)
 {
-    std::unique_ptr<OIIO::ImageOutput> image{OIIO::ImageOutput::create("tmp.tiff")};
+    std::unique_ptr<OIIO::ImageOutput> image{OIIO::ImageOutput::create(ARBITRARY_TIFF_FILE)};
     ASSERT_TRUE(image);
 
-    const bool result{image->open("tmp.tiff", mandel::get_iter_spec(640, 480))};
+    const bool result{image->open(ARBITRARY_TIFF_FILE, mandel::get_iter_spec(640, 480))};
 
     EXPECT_FALSE(result);
 }

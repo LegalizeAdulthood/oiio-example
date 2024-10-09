@@ -16,16 +16,16 @@ OIIO::ImageSpec get_iter_spec(int width, int height)
     return spec;
 }
 
-OrbitResult iterate(const std::complex<double> &loc, std::uint32_t maxIter)
+OrbitResult iterate(const std::complex<double> &c, std::uint32_t maxIter)
 {
     OrbitResult result;
-    result.lastZ = loc;
-    result.iterationCount = 1;
+    result.lastZ = c;
+    result.count = 1;
 
-    while (std::abs(result.lastZ) < 4.0 && result.iterationCount < maxIter)
+    while (std::abs(result.lastZ) < 4.0 && result.count < maxIter)
     {
-        result.lastZ = result.lastZ*result.lastZ + loc;
-        ++result.iterationCount;
+        result.lastZ = result.lastZ*result.lastZ + c;
+        ++result.count;
     }
     return result;
 }
