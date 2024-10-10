@@ -2,7 +2,7 @@
 
 # OpenImageIO Example
 
-Sample code for the video Getting Started with OpenImageIO.
+Sample code for the video [Introduction to OpenImageIO](https://www.youtube.com/watch?v=XtNfh6I6eXw).
 
 [Utah C++ Programmers](https://meetup.com/utah-cpp-programmers)\
 [Past Topics](https://utahcpp.wordpress.com/past-meeting-topics/)\
